@@ -1,0 +1,134 @@
+# Maya Chatbot - Documentation
+
+## Project Overview
+Maya is a chatbot built for an OTT platform to provide personalized movie recommendations. It uses a modular React architecture with Next.js (App Router), animations via Framer Motion, and either OpenAI API or mock data for responses.
+
+---
+
+## Tech Stack
+- **Frontend**: React (Next.js App Router)
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Backend/Logic**: OpenAI API / Mock data
+
+---
+
+## Folder Structure (Simplified)
+```
+src/
+├── components/
+│   ├── ChatWidget.jsx
+│   ├── MessageList.jsx
+│   ├── ChatInput.jsx
+│   └── SuggestionButtons.jsx
+```
+
+---
+
+## Components & Responsibilities
+
+### 1. ChatWidget.jsx
+- Main component that wraps the entire chatbot interface
+- Toggle button to expand/collapse chat window
+- Uses `<AnimatePresence>` & `<motion.div>` for entrance/exit animations
+- Contains:
+  - Chat Header (RecoBot)
+  - `<MessageList />`
+  - `<SuggestionButtons />`
+  - `<ChatInput />`
+  - Disclaimer message
+
+### 2. MessageList.jsx
+- Displays all messages (user & bot)
+- Auto-scrolls using `ref`
+- Shows animated typing dots using bounce effect
+- Conditional styling for user vs bot messages
+
+### 3. ChatInput.jsx
+- Controlled component to manage user input
+- Sends message on Enter key or button click
+- Disables input when bot is typing
+
+### 4. SuggestionButtons.jsx
+- Shows a set of predefined queries
+- Buttons are styled and centered
+- On click:
+  - Auto-fills input field
+  - Simulates a small delay
+  - Sends the message as if typed by the user
+
+---
+
+## Message State Logic
+- `messages`: array storing all chat messages
+- `input`: stores the current input text
+- `isTyping`: indicates if the bot is typing
+- On sending a message:
+  1. User message added to `messages`
+  2. Set `isTyping = true`
+  3. `setTimeout` triggers bot reply after delay
+  4. Bot message added, `isTyping = false`
+
+---
+
+## Welcome Message Customization
+```js
+{
+  from: 'bot',
+  text: `<strong>Hi, I'm Maya ❤️</strong><br/><small>I'm here to help you get your movie recommendations</small>`
+}
+```
+
+Render with:
+```jsx
+<div dangerouslySetInnerHTML={{ __html: msg.text }} />
+```
+
+---
+
+## Typing Animation
+Bouncing dots simulate bot typing:
+```jsx
+<span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0s' }}></span>
+```
+
+---
+
+## Environment Variables (Next.js)
+- Use `.env.local`
+- Example:
+```env
+OPENAI_API_KEY=sk-xxxxxx
+```
+- Access in code via `process.env.OPENAI_API_KEY`
+
+---
+
+## UX Enhancements
+- Input disabled while bot is typing
+- Typing animation gives real-time feedback
+- Suggestions auto-send messages
+- Expand/collapse button for UI control
+
+---
+
+## Use Cases
+This logic can be reused in:
+- Customer support bots
+- Virtual shopping assistants
+- Help desk chat modules
+- Personal productivity or Q&A bots
+
+---
+
+## Optional Enhancements
+- Save chat history in localStorage or DB
+- Integrate voice-to-text
+- Add sound effects
+- Deploy as reusable NPM package
+
+---
+
+## Credits
+Developed by Sai Teja, 2025.
+

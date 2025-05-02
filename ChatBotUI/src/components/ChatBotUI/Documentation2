@@ -1,0 +1,91 @@
+# Maya Chatbot - OTT Movie Recommendation Assistant
+
+## 📌 Project Overview
+**Maya** is a conversational chatbot embedded in an OTT platform that provides personalized movie recommendations. Built using **React** (with **Next.js App Router**), it uses typing animations, interactive message suggestions, a toggleable chat interface, and smooth animations using **Framer Motion**.
+
+---
+
+## 🛠️ Features
+
+- 💬 **Chat Interface** with user/bot messages
+- ⌨️ **Typing Indicator** for realistic responses
+- 💡 **Suggested Replies** to simulate quick response buttons
+- ⚙️ **Expand/Collapse Button** for toggling the chat window
+- 🖼️ **Bot Avatar** using a custom AI-generated lady assistant
+- ✨ **Framer Motion** animations for smooth transitions
+- 🔐 **Environment Config** using `.env.local` for API keys
+- ⌛ **Response Delay** to mimic realistic typing and improve UX
+
+---
+
+## 📁 File Structure
+
+```
+src/
+├── components/
+│   ├── ChatBotUI.jsx       # Main chatbot wrapper with toggle
+│   ├── ChatInput.jsx       # Input component for user messages
+│   ├── MessageList.jsx     # Renders chat messages + typing animation
+│   ├── SuggestionButtons.jsx # Button suggestions rendered conditionally
+├── assets/
+│   └── maya-avatar.png     # Bot avatar image
+.env.local                  # For API key (NEXT_PUBLIC_OPENAI_KEY)
+```
+
+---
+
+## 🚀 How it Works
+
+1. **Toggle Chat** - User clicks on button to show/hide chatbot.
+2. **Initial Bot Message** - Styled welcome message using bold and smaller text.
+3. **User Input** - Users can type or click a suggestion.
+4. **Typing Animation** - Bot "types" using animated dots.
+5. **Delayed Bot Response** - Simulates delay for realistic conversation.
+6. **Response Rendered** - Message appears after animation ends.
+7. **Suggestions Hidden** - After first message, suggestions disappear.
+
+---
+
+## ✅ Tech Stack
+
+- **Frontend:** React + Next.js (App Router)
+- **Styling:** Tailwind CSS
+- **Animation:** Framer Motion
+- **Avatar UI:** MUI Avatar (or plain image)
+
+---
+
+## 🔐 Environment Setup
+
+Add your OpenAI key to `.env.local`:
+```env
+NEXT_PUBLIC_OPENAI_KEY=your_openai_api_key_here
+```
+In Next.js, environment variables must be prefixed with `NEXT_PUBLIC_` to be available on the client.
+
+---
+
+## 💡 Customization Notes
+
+- You can change the **avatar** image in `assets/maya-avatar.png`
+- Update **suggestions** in `SuggestionButtons.jsx`
+- Modify typing delay in `sendMessage()` function using `setTimeout`
+
+---
+
+## 🌟 Future Enhancements
+
+- 🎯 **Intent Detection** to categorize queries (e.g. genre-based, actor-based)
+- 🧠 **Context-Aware Replies** using conversation memory
+- 🔍 **Real-time Movie Fetching** via TMDb/IMDB APIs
+- 🌐 **Multilingual Support** for regional OTT users
+- 🎨 **Theming Support** (light/dark/chat bubble themes)
+- 🔄 **Persistent History** using localStorage or backend DB
+- 📱 **Mobile Responsive Enhancements**
+- 🔒 **Session Timeouts or Rate Limits** to manage traffic
+
+---
+
+## 🙌 Author
+Built by Sai Teja. Maya, your OTT assistant, is here to make movie nights easier and smarter! 🍿
+

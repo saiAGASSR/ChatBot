@@ -1,0 +1,84 @@
+Remove-Item -Recurse -Force .next
+
+
+After this it has been resolved How?
+ChatGPT said:
+Great! The issue was resolved because deleting the .next folder cleared Next.js’s build cache. Here’s why that worked:
+
+What Was the Issue?
+Your Next.js project was failing to resolve tailwindcss, likely due to:
+
+Version Conflicts – Two different versions of Tailwind were installed.
+Cached Build Errors – Next.js caches compiled files inside .next, and an outdated cache might have been referencing the wrong Tailwind version or missing dependencies.
+Why Did Deleting .next Fix It?
+Cleared Corrupt or Outdated Cache – When you deleted .next, Next.js was forced to rebuild everything from scratch, including resolving Tailwind correctly.
+Forced Next.js to Detect the Correct Tailwind Version – Since .next might have been stuck on an older, incompatible build, clearing it allowed Next.js to use the proper version installed in node_modules.
+What Can You Do in the Future?
+If you run into similar issues again, try:
+✅ Restarting the server (Ctrl + C and npm run dev)
+✅ Clearing the Next.js cache (Remove-Item -Recurse -Force .next)
+✅ Reinstalling dependencies (rm -rf node_modules package-lock.json && npm install)
+
+Glad it's working now! 🚀
+
+
+Files 
+
+
+tailwind.config.mjs
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+    },
+  },
+  plugins: [],
+};
+
+
+
+postcss.config.mjs
+
+
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+
+
+
+globals.css
+
+@import "tailwindcss";
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}

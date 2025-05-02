@@ -1,0 +1,57 @@
+https://tailwindcss.com/docs/installation/using-postcss
+https://tailwindcss.com/docs/installation/tailwind-cli
+https://tailwindcss.com/docs/installation/framework-guides/nextjs
+
+tailwind.config.css
+
+
+        /** @type {import('tailwindcss').Config} */
+        export default {
+        content: [
+            "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+            "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+            "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+        ],
+        theme: {
+            extend: {
+            colors: {
+                background: "var(--background)",
+                foreground: "var(--foreground)",
+            },
+            },
+        },
+        plugins: [],
+        };
+
+
+postcss.config.mjs
+
+const config = {
+    plugins: {
+      "@tailwindcss/postcss": {},
+    },
+  };
+  
+  export default config;
+
+  
+
+Pakcage.json
+    "@tailwindcss/postcss": "^4.0.7",
+        "tailwindcss": "^4.0.7",
+
+
+
+globals.css in src folder 
+
+@import "tailwindcss";
+
+
+no documentaion  - before build or running 
+
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
