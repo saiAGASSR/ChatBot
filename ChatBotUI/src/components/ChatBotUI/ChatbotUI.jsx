@@ -175,7 +175,7 @@ export default function ChatbotUI() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3 }}
-            className="xl:absolute  xl:mr-65 xl:w-[100vh] xl:h-[100vh] fixed bottom-0 right-0 md:bottom-4 md:right-4 w-full md:w-100 md:h-full md:max-h-[100vh] bg-white rounded-none md:rounded-2xl shadow-lg flex flex-col overflow-hidden border border-gray-200 z-50"
+            className="xl:absolute  xl:mr-65 xl:w-[100vh] xl:h-[100vh] fixed bottom-0 right-0 md:bottom-4 md:right-4 w-full md:w-100 md:h-full md:max-h-[100vh]  sm:max-h-[100vh] bg-white rounded-none md:rounded-2xl shadow-lg flex flex-col overflow-hidden border border-gray-200 z-50"
           >
 
             {/* Header */}
