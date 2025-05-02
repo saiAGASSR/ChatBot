@@ -57,7 +57,7 @@ export default function ChatbotUI() {
     };
 
     try {
-      const response = await axios.post("https://192.168.141.115:8000/chat", body);
+      const response = await axios.post("https://chat-bot-my-reco.vercel.app/chat", body);
       return response.data;
     } catch (error) {
       console.error("Error in chat request", error);
