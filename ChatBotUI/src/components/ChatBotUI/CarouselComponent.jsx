@@ -27,7 +27,7 @@ export default function CarouselComponent({ items }) {
     {
     breakpoint: 2000,
     settings: {
-      slidesToShow: 2,
+      slidesToShow: 3,
     },
     },
     {
@@ -40,7 +40,7 @@ export default function CarouselComponent({ items }) {
   };
 
   return (
-  <div className="w-full px-2.5 mt-4 mb-4">  
+  <div className="w-full px-2.5 mt-4 mb-4  ">  
     <Slider {...settings}>
     {items.map((item, idx) => (
       <a href={item.contentPath} target='_blank' rel="noopener noreferrer" key={idx}>

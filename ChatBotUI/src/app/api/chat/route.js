@@ -1,21 +1,39 @@
-// app/api/chat/route.js
+import axios from 'axios';
+
 export async function POST(req) {
-  const body = await req.json();
-  const userInput = body?.messages?.[1]?.content || "";
-  // Wait 2 seconds before returning the response (simulate thinking)
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  try {
+    const body = await req.json();
+    const { user_message, session_id, userid } = body;
 
-  // Mimic OpenAI-like response
-  const response = {
-    choices: [
-      {
-        message: {
-          role: "assistant",
-          content: `You said: ${userInput}`,
-        },
-      },
-    ],
-  };
+    if (!user_message || !session_id || !userid) {
+      return new Response(
+        JSON.stringify({ error: "Missing required fields" }),
+        { status: 400 }
+      );
+    }
 
-  return Response.json(response);
+    const BACKEND_URL = "http://13.232.27.217:8080/chat";
+
+    const response = await axios.post(BACKEND_URL, {
+      user_message,
+      session_id,
+      userid,
+    });
+
+    return new Response(JSON.stringify(response.data), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+  } catch (error) {
+    console.error("Error in chat request:", error.message);
+
+    return new Response(
+      JSON.stringify({
+        error: "Internal Server Error",
+        details: error.message
+      }),
+      { status: 500 }
+    );
+  }
 }

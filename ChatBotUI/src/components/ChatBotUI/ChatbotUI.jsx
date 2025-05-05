@@ -53,21 +53,41 @@ export default function ChatbotUI() {
     const body = {
       userid: `${userId}`,
       session_id: sessionId,
-      user_message: userInput
+      user_message: userInput,
     };
-
+  
     try {
-      const response = await axios.post("https://chat-bot-my-reco.vercel.app/chat", body);
-      return response.data;
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',  // Specify the content type as JSON
+        },
+        body: JSON.stringify(body),
+      });
+  
+      console.log("Sent body:", body);  // Log the body you're sending
+  
+      if (!response.ok) {
+        // Handle non-OK responses (e.g., 4xx or 5xx errors)
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+  
+      // Parse the JSON response
+      const responseData = await response.json();
+      console.log("Received response:", responseData);
+  
+      return responseData;  // Return the parsed JSON response
     } catch (error) {
-      console.error("Error in chat request", error);
+      console.error("Error in chat request:", error);
       return {
         Bot_Response: "Sorry, something went wrong.",
         Carousel_Results: [],
-        Search_Suggestions: []
+        Search_Suggestions: [],
       };
     }
   };
+  
+  
 
   const sendMessage = async (messageText = input) => {
     if (!messageText.trim()) return;
@@ -175,7 +195,7 @@ export default function ChatbotUI() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3 }}
-            className="xl:absolute  xl:mr-65 xl:w-[100vh] xl:h-[100vh] fixed bottom-0 right-0 md:bottom-4 md:right-4 w-full md:w-100 md:h-full md:max-h-[100vh]  sm:max-h-[100vh] bg-white rounded-none md:rounded-2xl shadow-lg flex flex-col overflow-hidden border border-gray-200 z-50"
+            className="fixed bottom-0 right-0 w-full h-full bg-white rounded-xl shadow-lg flex flex-col overflow-hidden border border-gray-200 z-50"
           >
 
             {/* Header */}
