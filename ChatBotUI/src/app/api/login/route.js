@@ -5,7 +5,7 @@ export async function POST(request) {
 
   const staticCredentials = {
     email: 'myreco_chatbot@gmail.com',
-    password: 'MayaChatBot@745',
+    password: 'MyRecoChatBot@745',
   };
 
   if (email === staticCredentials.email && password === staticCredentials.password) {

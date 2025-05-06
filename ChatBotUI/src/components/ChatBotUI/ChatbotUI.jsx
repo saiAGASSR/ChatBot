@@ -65,7 +65,6 @@ export default function ChatbotUI() {
         body: JSON.stringify(body),
       });
   
-      console.log("Sent body:", body);  // Log the body you're sending
   
       if (!response.ok) {
         // Handle non-OK responses (e.g., 4xx or 5xx errors)
@@ -74,11 +73,9 @@ export default function ChatbotUI() {
   
       // Parse the JSON response
       const responseData = await response.json();
-      console.log("Received response:", responseData);
   
       return responseData;  // Return the parsed JSON response
     } catch (error) {
-      console.error("Error in chat request:", error);
       return {
         Bot_Response: "Sorry, something went wrong.",
         Carousel_Results: [],

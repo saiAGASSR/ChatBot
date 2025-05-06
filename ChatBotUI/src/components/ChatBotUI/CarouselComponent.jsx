@@ -27,7 +27,7 @@ export default function CarouselComponent({ items }) {
     {
     breakpoint: 2000,
     settings: {
-      slidesToShow: 3,
+      slidesToShow: 2,
     },
     },
     {

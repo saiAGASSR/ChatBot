@@ -12,7 +12,6 @@ export async function POST(req) {
       );
     }
 
-    console.log("Received request body:", body);
 
     const BACKEND_URL = "http://13.232.27.217:9090/chat";
 
@@ -21,7 +20,6 @@ export async function POST(req) {
       session_id,
       userid,
     });
-    console.log("Response from backend:", response.data);
     
 
     return new Response(JSON.stringify(response.data), {
@@ -30,7 +28,6 @@ export async function POST(req) {
     });
 
   } catch (error) {
-    console.error("Error in chat request:", error.message);
 
     return new Response(
       JSON.stringify({
