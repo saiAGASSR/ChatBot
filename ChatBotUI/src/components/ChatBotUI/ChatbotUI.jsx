@@ -195,8 +195,8 @@ export default function ChatbotUI() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-0 right-0 w-full h-full bg-white rounded-xl shadow-lg flex flex-col overflow-hidden border border-gray-200 z-50"
-          >
+            className="fixed bottom-0 right-0 w-full h-full xl:w-1/2 xl:mr-80 rounded-xl shadow-lg flex flex-col overflow-hidden border border-gray-200 z-50  bg-cover bg-no-repeat bg-center"
+            >
 
             {/* Header */}
             <ChatHeader setIsOpen={setIsOpen} setClearChat={setClearChat} />

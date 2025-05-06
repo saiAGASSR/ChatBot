@@ -12,13 +12,17 @@ export async function POST(req) {
       );
     }
 
-    const BACKEND_URL = "http://13.232.27.217:8080/chat";
+    console.log("Received request body:", body);
+
+    const BACKEND_URL = "http://13.232.27.217:9090/chat";
 
     const response = await axios.post(BACKEND_URL, {
       user_message,
       session_id,
       userid,
     });
+    console.log("Response from backend:", response.data);
+    
 
     return new Response(JSON.stringify(response.data), {
       status: 200,
