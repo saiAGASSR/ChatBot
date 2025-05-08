@@ -58,7 +58,7 @@ export default function ChatbotUI() {
   
     try {
         const response = await axios.post(
-          'https://9be2-183-82-43-227.ngrok-free.app/chat',
+          'https://16ab-183-82-43-227.ngrok-free.app/chat',
           body,
           {
             withCredentials: true,
