@@ -58,19 +58,11 @@ export default function ChatbotUI() {
   
     try {
         const response = await axios.post(
-          'https://6820-183-82-43-227.ngrok-free.app/chat',
+          'https://5599-183-82-43-227.ngrok-free.app/chat',
           body
         );
 
-      
 
-      
-  
-  
-     
-  
-      
-  
       return response.data;  // Return the parsed JSON response
     } catch (error) {
       console.error("Error in chat request:", error);
