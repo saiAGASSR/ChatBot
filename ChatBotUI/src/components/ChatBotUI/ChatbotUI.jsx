@@ -58,7 +58,7 @@ export default function ChatbotUI() {
   
     try {
         const response = await axios.post(
-          'http://13.232.27.217:9090/chat',
+          'https://a2e8-183-82-43-227.ngrok-free.app/chat',
           body
         );
 
