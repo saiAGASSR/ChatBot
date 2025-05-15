@@ -65,7 +65,6 @@ export default function ChatbotUI() {
           }
         );
 
-
       return response.data;  // Return the parsed JSON response
     } catch (error) {
       console.error("Error in chat request:", error);

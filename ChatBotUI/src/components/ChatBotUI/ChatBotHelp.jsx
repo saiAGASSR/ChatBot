@@ -3,7 +3,7 @@ import { X } from 'lucide-react'; // for modern close icon
 const ChatBotHelp = ({ setShowModal }) => {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-2/3 overflow-y-auto max-h-[80vh]">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-2/3 overflow-y-auto max-h-[80vh] shadow-sky-500/50 inset-shadow-sm inset-shadow-sky-500 ring-1 ring-sky-500/50">
             <button
                 className="ml-200 px-4 py-2  text-red-400 rounded transition-all duration-300  hover:text-red-700  "
                 onClick={() => setShowModal(false)}
