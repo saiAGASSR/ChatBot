@@ -108,7 +108,9 @@ useEffect(() => {
             .reduce((data, byte) => data + String.fromCharCode(byte), '')
         );
 
-        const GOOGLE_API_KEY = AIzaSyD8GlSK43dHXTFzfxN0BzvIItShxms3KjM ;
+        const GOOGLE_API_KEY = AIzaSyD8GlSK43dHXTFzfxN0BzvIItShxms3KjM;
+        console.log("gApi",GOOGLE_API_KEY);
+        
 
         const response = await fetch(
           `https://speech.googleapis.com/v1/speech:recognize?key=${GOOGLE_API_KEY}`,
@@ -135,6 +137,9 @@ useEffect(() => {
         }
 
         const result = await response.json();
+        console.log("result from google",result);
+        console.log("result from google results" ,result.results);
+        
         const transcription =
           result.results?.map(r => r.alternatives[0].transcript).join('\n') || '';
 
