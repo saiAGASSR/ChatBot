@@ -108,7 +108,7 @@ useEffect(() => {
             .reduce((data, byte) => data + String.fromCharCode(byte), '')
         );
 
-        const GOOGLE_API_KEY = AIzaSyD8GlSK43dHXTFzfxN0BzvIItShxms3KjM;
+        const GOOGLE_API_KEY = 'AIzaSyD8GlSK43dHXTFzfxN0BzvIItShxms3KjM';
         console.log("gApi",GOOGLE_API_KEY);
         
 
