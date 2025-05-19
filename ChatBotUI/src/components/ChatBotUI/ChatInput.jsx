@@ -77,61 +77,83 @@ useEffect(() => {
 
 
 
-const handleMicClick = async () => {
-  if (recording) {
-    mediaRecorderRef.current.stop();
-    setRecording(false);
-    return;
-  }
+  const handleMicClick = async () => {
+    if (recording) {
+      mediaRecorderRef.current.stop();
+      setRecording(false);
+      return;
+    }
 
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const mediaRecorder = new MediaRecorder(stream);
-    mediaRecorderRef.current = mediaRecorder;
-    chunksRef.current = [];
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-    mediaRecorder.ondataavailable = (e) => {
-      if (e.data.size > 0) chunksRef.current.push(e.data);
-    };
+      const mediaRecorder = new MediaRecorder(stream, {
+        mimeType: 'audio/webm;codecs=opus',
+      });
 
-    mediaRecorder.onstop = async () => {
-      stream.getTracks().forEach(track => track.stop());
+      mediaRecorderRef.current = mediaRecorder;
+      chunksRef.current = [];
 
-      const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
-      const formData = new FormData();
-      formData.append('audio', blob, 'voice.webm');
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunksRef.current.push(e.data);
+      };
 
-      try {
-        const res = await fetch('/api/voice-to-text', {
-          method: 'POST',
-          body: formData,
-        });
-        console.log("response from api-g",res);
-        
+      mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach(track => track.stop());
 
-        if (!res.ok) throw new Error('Server error');
+        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
+        const buffer = await blob.arrayBuffer();
+        const audioBase64 = btoa(
+          new Uint8Array(buffer)
+            .reduce((data, byte) => data + String.fromCharCode(byte), '')
+        );
 
-        const data = await res.json();
+        const GOOGLE_API_KEY = AIzaSyD8GlSK43dHXTFzfxN0BzvIItShxms3KjM ;
 
-        if (data.transcription) {
-          setInput(data.transcription);
-          sendMessage();  // pass transcription directly
-        } else {
-          alert('No transcription received.');
+        const response = await fetch(
+          `https://speech.googleapis.com/v1/speech:recognize?key=${GOOGLE_API_KEY}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              config: {
+                encoding: 'WEBM_OPUS',
+                sampleRateHertz: 48000,
+                languageCode: 'en-IN',
+                alternativeLanguageCodes: ['hi-IN', 'te-IN', 'ta-IN', 'bn-IN'],
+              },
+              audio: {
+                content: audioBase64,
+              },
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(errText);
         }
-      } catch (err) {
-        console.error('Transcription error:', err);
-        alert('Voice transcription failed.');
-      }
-    };
 
-    mediaRecorder.start();
-    setRecording(true);
-  } catch (err) {
-    console.error('Mic error:', err);
-    alert('Microphone access is required.');
-  }
-};
+        const result = await response.json();
+        const transcription =
+          result.results?.map(r => r.alternatives[0].transcript).join('\n') || '';
+
+        if (transcription.trim()) {
+          setInput(transcription);
+          sendMessage(transcription);
+        } else {
+          alert('No speech detected.');
+        }
+      };
+
+      mediaRecorder.start();
+      setRecording(true);
+    } catch (err) {
+      console.error('Mic error:', err);
+      alert('Microphone access failed.');
+    }
+  };
+
 
 
 useEffect(() => {
