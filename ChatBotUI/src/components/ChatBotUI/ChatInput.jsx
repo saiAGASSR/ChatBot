@@ -8,7 +8,7 @@ import SelectLabels from './DropDownLanguages';
 
 
 
-export function ChatInput({ input, setInput, sendMessage, isTyping, userInputFocus }) {
+export function ChatInput({ input, setInput, sendMessage, isTyping, userInputFocus,voiceInput }) {
   const [selectedLanguageCode, setSelectedLanguageCode] = useState('en-IN');
   const [recording, setRecording] = useState(false);
   const mediaRecorderRef = useRef(null);
@@ -27,6 +27,8 @@ export function ChatInput({ input, setInput, sendMessage, isTyping, userInputFoc
     }
 
   };
+  const isVoiceOn = voiceInput === 'on' 
+
 
 
   useEffect(() => {
@@ -81,6 +83,8 @@ useEffect(() => {
 
   const handleGoogleMicClick = async () => {
     if (recording) {
+      mediaRecorderRef.current.stop();
+      setRecording(false);
       return;
     }
 
@@ -199,41 +203,45 @@ useEffect(() => {
 
  return (
   <div className="border-t border-gray-200 bg-white px-3 py-2 flex items-center gap-2">
-  {/* React Speech Recognition Mic Button */}
-  <button
-    onClick={handleReactMicClick}
-    type="button"
-    aria-label="Start mic input using React Speech Recognition"
-    className="text-gray-500 hover:text-blue-600"
-    disabled={listening || isTyping}
-  >
-    {listening ? (
-      <Mic className="w-5 h-5 animate-pulse" color="red" />
-    ) : (
-      <Mic className="w-5 h-5" />
-    )}
-  </button>
+  {isVoiceOn && <>
 
-  {/* Google Cloud Speech-to-Text Mic Button */}
-  <button
-    onClick={handleGoogleMicClick}
-    type="button"
-    aria-label="Start mic input using Google Speech-to-Text"
-    className="text-gray-500 hover:text-blue-600"
-    disabled={recording || isTyping}
-  >
-    {recording ? (
-      <FcGoogle className="w-5 h-5 animate-pulse" />
-    ) : (
-      <FaGoogle className="w-5 h-5" />
-    )}
-  </button>
+        {/* React Speech Recognition Mic Button */}
+        <button
+          onClick={handleReactMicClick}
+          type="button"
+          aria-label="Start mic input using React Speech Recognition"
+          className="text-gray-500 hover:text-blue-600"
+          disabled={listening || isTyping}
+        >
+          {listening ? (
+            <Mic className="w-5 h-5 animate-pulse" color="red" />
+          ) : (
+            <Mic className="w-5 h-5" />
+          )}
+        </button>
 
-  {/* Language Selector */}
-  <SelectLabels 
-    setSelectedLanguageCode={setSelectedLanguageCode}
-    selectedLanguageCode={selectedLanguageCode}
-  />
+        {/* Google Cloud Speech-to-Text Mic Button */}
+        <button
+          onClick={handleGoogleMicClick}
+          type="button"
+          aria-label="Start mic input using Google Speech-to-Text"
+          className="text-gray-500 hover:text-blue-600"
+          disabled={recording || isTyping}
+        >
+          {recording ? (
+            <FcGoogle className="w-5 h-5 animate-pulse" />
+          ) : (
+            <FaGoogle className="w-5 h-5" />
+          )}
+        </button>
+
+        {/* Language Selector */}
+        <SelectLabels 
+          setSelectedLanguageCode={setSelectedLanguageCode}
+          selectedLanguageCode={selectedLanguageCode}
+        />
+  </>
+  }
 
   {/* Input Text Area */}
   <textarea
@@ -249,7 +257,7 @@ useEffect(() => {
 
   {/* Send Button */}
   <button
-    onClick={sendMessage}
+    onClick={()=>sendMessage()}
     disabled={!input.trim() || isTyping}
     aria-label="Send message"
     className={`p-2 rounded-full transition ${

@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Avatar from '@mui/material/Avatar';
 
 
-export default function ChatbotUI() {
+export default function ChatbotUI({voiceInput}) {
   const [userId,setUserId] = useState(15)
   const [sessionId, setSessionId] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
@@ -211,6 +211,7 @@ export default function ChatbotUI() {
               sendMessage={sendMessage}
               isTyping={isTyping}
               userInputFocus={userInputFocus}
+              voiceInput={voiceInput}
             />
 
             {/* Footer Note */}

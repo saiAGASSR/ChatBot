@@ -13,7 +13,7 @@ export default function GetUserIdForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem('userId', userId);
-    router.push('/chatbot');
+    router.push('/chatbot?voiceInput=on');
   };
 
   return (
