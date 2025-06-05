@@ -25,7 +25,7 @@ const ChatHeader = ({setIsOpen , setClearChat})=>{
                     </span>
 
                     <span className="ml-2 text-sm  md:text-sm font leading-tight ">
-                    MyReco AI Assitant
+                    myreco AI Assistant
                     </span>
 
                 </div>

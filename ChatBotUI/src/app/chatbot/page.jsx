@@ -1,19 +1,16 @@
-'use client';
-
-
-import ChatbotUI from "@/components/ChatBotUI/ChatbotUI";
-import { useSearchParams } from 'next/navigation';
+import ChatClient from '@/components/ChatBotUI/ChatClient';
+import { Suspense } from 'react';
 
 
 export default function Home() {
-  const searchParams = useSearchParams();
-  const voiceInput = searchParams.get('voiceInput');
-  
-  
-
   return (
-    <div className="w-screen h-screen md:w-1/2    flex items-center justify-center bg-white">
-      <ChatbotUI voiceInput={voiceInput} />
-    </div>
+    <Suspense 
+    fallback= { <div className="w-screen h-screen flex flex-col items-center justify-center bg-white">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
+                <p className="mt-4 text-gray-600 text-sm">Loading chatbot...</p>
+                </div>
+              }>
+      <ChatClient />
+    </Suspense>
   );
 }
