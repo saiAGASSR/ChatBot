@@ -153,22 +153,17 @@ useEffect(() => {
           .reduce((data, byte) => data + String.fromCharCode(byte), '')
       );
 
-      const GOOGLE_API_KEY = 'AIzaSyD8GlSK43dHXTFzfxN0BzvIItShxms3KjM';
       const response = await fetch(
-        `https://speech.googleapis.com/v1/speech:recognize?key=${GOOGLE_API_KEY}`,
+        `https://alphaapi.myreco.in/speech_to_text`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            config: {
-              encoding: 'WEBM_OPUS',
-              sampleRateHertz: 48000,
-              languageCode: selectedLanguageCode,
-            },
-            audio: {
-              content: audioBase64,
-            },
-          }),
+
+              audio_text : audioBase64,
+              language_code : selectedLanguageCode
+            
+          })
         }
       );
         if (!response.ok) {
