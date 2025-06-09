@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Avatar from '@mui/material/Avatar';
 
 
-export default function ChatbotUI({voiceInput}) {
+export default function ChatbotUI({voiceInput , jwt}) {
   const [userId,setUserId] = useState(15)
   const [sessionId, setSessionId] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
@@ -54,6 +54,7 @@ export default function ChatbotUI({voiceInput}) {
       userid: `${userId}`,
       session_id: sessionId,
       user_message: userInput,
+      jwt : jwt
     };
   
     try {
@@ -70,6 +71,9 @@ export default function ChatbotUI({voiceInput}) {
       console.error("Error in chat request:", error);
       if(error.code === 'ECONNABORTED'){
         console.error("Timeout error:", error.message);
+      }
+      if(error.code === 'tokenExpired'){
+        console.error("token expired", error.message);
       }
 
       return {

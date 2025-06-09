@@ -10,9 +10,9 @@ export function middleware(request) {
   const auth = request.cookies.get('auth')?.value;
   
 
-  if (!auth) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
+  // if (!auth) {
+  //   return NextResponse.redirect(new URL('/login', request.url));
+  // }
 
   return NextResponse.next();
 }

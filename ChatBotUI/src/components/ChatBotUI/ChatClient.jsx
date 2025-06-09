@@ -5,25 +5,26 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import ChatbotUI from './ChatbotUI';
 
 export default function ChatClient() {
+  const [userId,setUserId]= useState('');
   const router = useRouter();
   const searchParams = useSearchParams();
   const voiceInput = searchParams.get('voiceInput');
+  const jwt = searchParams.get('token');
+
   
 
-  const [userId, setUserId] = useState(null);
 
-useEffect(() => {
-  if (typeof window !== 'undefined') {
-    const storedUserId = localStorage.getItem('userId');
-    console.log('user_id in chat:', storedUserId);
-
-    if (!storedUserId) {
-      router.push('/enter-user-id');
-    } else {
-      setUserId(storedUserId);
-    }
+  useEffect( ()=>{
+  const userIdParam = searchParams.get('userId');
+  
+  if( userIdParam && userIdParam !== userId){
+    
+    setUserId(userIdParam)
+    localStorage.setItem('userId', userIdParam )
+    
   }
-}, [router]);
+
+  }, [searchParams.toString()] )
 
 
   if (!userId) return <div>Redirecting...</div>;
@@ -31,7 +32,7 @@ useEffect(() => {
   return (
     <div className="w-screen h-screen md:w-1/2 flex items-center justify-center bg-white">
         
-      <ChatbotUI voiceInput={voiceInput} />
+      <ChatbotUI voiceInput={voiceInput}  jwt={jwt}/>
       
     </div>
   );
