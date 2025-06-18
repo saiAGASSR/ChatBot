@@ -12,8 +12,9 @@ export default function GetUserIdForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMzExMSIsImRldmljZUlkIjoiMTIiLCJpYXQiOjE1MTYyMzkwMjJ9.zFbkBP1F-KxDzyMs14tpvEEkQH4qYgOJurDp9i_zOH8'
     localStorage.setItem('userId', userId);
-    router.push(`/chatbot?voiceInput=on&token=abc1234&userId=${userId}`);
+    router.push(`/chatbot?voiceInput=on&token=${jwtToken}&projectId=dW4-gbS-6ET-IPt`);
   };
 
   return (

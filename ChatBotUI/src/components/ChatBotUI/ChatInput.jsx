@@ -191,9 +191,9 @@ useEffect(() => {
 
 
 
-useEffect(() => {
-  if (!isTyping) userInputFocus.current.focus();
-}, [isTyping]);
+// useEffect(() => {
+//   if (!isTyping) userInputFocus.current.focus();
+// }, [isTyping]);
 
 
  return (

@@ -10,15 +10,18 @@ import ChatHeader from './ChatHeader';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import Avatar from '@mui/material/Avatar';
+import bot_movie_results from './carouselsData';
 
 
 export default function ChatbotUI({voiceInput , jwt}) {
   const [userId,setUserId] = useState(15)
   const [sessionId, setSessionId] = useState(null);
+  const [projectId, setProjectId] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
   const [clearChat,setClearChat]= useState(false);
   const [messages, setMessages] = useState([
-    { from: 'bot', text: (
+    { from: 'bot',
+      text: (
       <>
         <div>
           <div className='flex row'>
@@ -54,7 +57,8 @@ export default function ChatbotUI({voiceInput , jwt}) {
       userid: `${userId}`,
       session_id: sessionId,
       user_message: userInput,
-      jwt : jwt
+      jwt : jwt,
+      projectId : projectId
     };
   
     try {
@@ -130,14 +134,19 @@ export default function ChatbotUI({voiceInput , jwt}) {
 
       if (!existingSessionId) {
         const storedUserId = localStorage.getItem('userId');
+        const storedProjectId = localStorage.getItem('projectId');
         setUserId(storedUserId);
+        setProjectId(storedProjectId);
         
         const newSessionId = uuidv4();
         sessionStorage.setItem('sessionId', newSessionId);
         setSessionId(newSessionId);
       } else {
         const storedUserId = localStorage.getItem('userId');
+        const storedProjectId = localStorage.getItem('projectId');
+        console.log('project id in storage',storedProjectId);
         setUserId(storedUserId);
+        setProjectId(storedProjectId);
         setSessionId(existingSessionId);
       }
     }
