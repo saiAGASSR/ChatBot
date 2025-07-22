@@ -13,10 +13,11 @@ import Avatar from '@mui/material/Avatar';
 import bot_movie_results from './carouselsData';
 
 
-export default function ChatbotUI({voiceInput , jwt}) {
+export default function ChatbotUI({voiceInput , jwt,isTest}) {
   const [userId,setUserId] = useState(15)
   const [sessionId, setSessionId] = useState(null);
   const [projectId, setProjectId] = useState(null);
+  const [apiKey, setApiKey] = useState(null);
   const [isOpen, setIsOpen] = useState(true);
   const [clearChat,setClearChat]= useState(false);
   const [messages, setMessages] = useState([
@@ -51,23 +52,47 @@ export default function ChatbotUI({voiceInput , jwt}) {
   const messagesEndRef = useRef(null);
   const userInputFocus = useRef(null)
   const response = responseObject;
+  const handleUserIdChange = (value)=>{
+    console.log(value);
+    const afterTrim = value.trim();
+    console.log(afterTrim);
+    
+    setUserId(afterTrim)
+  }
 
-  const fetchBotResponse = async (userInput) => {
-    const body = {
-      userid: `${userId}`,
-      session_id: sessionId,
-      user_message: userInput,
-      jwt : jwt,
-      projectId : projectId
-    };
+  const fetchBotResponse = async (userInput , initialUrl = false) => {
+    let body;
+     if(initialUrl){
+      body = {
+        userid: `${userId}`,
+        session_id: sessionId,
+      };
+    } else{
+      body = {
+        userid: `${userId}`,
+        session_id: sessionId,
+        user_message: userInput,
+      };
+
+    }
+
+    const headers =   {
+              'Authorization' : `Bearer ${jwt}`,
+              'X-MYRECO-Project-ID' : projectId,
+              'X-MYRECO-API-Key' : apiKey
+          }
+    console.log(headers);
+          
+    const url = initialUrl ? 'https://alphaapi.myreco.in/generate_suggestions' : 'https://alphaapi.myreco.in/chat'
+    // const url = initialUrl ? 'http://192.168.141.143:8000/generate_suggestions' : 'http://192.168.141.143:8000/chat'
   
     try {
         const response = await axios.post(
-          'https://alphaapi.myreco.in/chat',
+          url,
           body,
-          {
-            withCredentials: true,
-          }
+          {headers}
+        
+         
         );
 
       return response.data;  // Return the parsed JSON response
@@ -133,20 +158,28 @@ export default function ChatbotUI({voiceInput , jwt}) {
       const existingSessionId = sessionStorage.getItem('sessionId');
 
       if (!existingSessionId) {
-        const storedUserId = localStorage.getItem('userId');
-        const storedProjectId = localStorage.getItem('projectId');
-        setUserId(storedUserId);
-        setProjectId(storedProjectId);
+
         
         const newSessionId = uuidv4();
         sessionStorage.setItem('sessionId', newSessionId);
         setSessionId(newSessionId);
-      } else {
+        
         const storedUserId = localStorage.getItem('userId');
         const storedProjectId = localStorage.getItem('projectId');
+        const storedapiKey = localStorage.getItem('apiKey');
         console.log('project id in storage',storedProjectId);
         setUserId(storedUserId);
         setProjectId(storedProjectId);
+        setApiKey(storedapiKey);
+      } else {
+
+        const storedUserId = localStorage.getItem('userId');
+        const storedProjectId = localStorage.getItem('projectId');
+        const storedapiKey = localStorage.getItem('apiKey');
+        console.log('project id in storage',storedProjectId);
+        setUserId(storedUserId);
+        setProjectId(storedProjectId);
+        setApiKey(storedapiKey);
         setSessionId(existingSessionId);
       }
     }
@@ -155,7 +188,7 @@ export default function ChatbotUI({voiceInput , jwt}) {
   useEffect(() => {
     const fetchInitialBotMessage = async () => {
       if (!sessionId) return; // Prevent request if session ID is not available yet
-      const botReply = await fetchBotResponse(`My user id is ${userId}`);
+      const botReply = await fetchBotResponse(`My user id is ${userId}`,true);
 
       setMessages((prev) => [
         ...prev,
@@ -169,7 +202,7 @@ export default function ChatbotUI({voiceInput , jwt}) {
     };
 
     fetchInitialBotMessage();
-  }, [sessionId]);
+  }, [sessionId , userId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -203,9 +236,10 @@ export default function ChatbotUI({voiceInput , jwt}) {
             transition={{ duration: 0.3 }}
             className="fixed bottom-0 right-0 w-full h-full xl:w-1/2 xl:mr-80 rounded-xl shadow-lg flex flex-col overflow-hidden border border-gray-200 z-50  bg-cover bg-no-repeat bg-center"
             >
+            
 
             {/* Header */}
-            <ChatHeader setIsOpen={setIsOpen} setClearChat={setClearChat} />
+            <ChatHeader setIsOpen={setIsOpen} setClearChat={setClearChat} isTest={isTest} userId={userId}  handleUserIdChange={handleUserIdChange}/>
 
 
             {/* Messages */}

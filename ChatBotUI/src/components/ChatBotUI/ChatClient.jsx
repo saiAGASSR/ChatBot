@@ -11,10 +11,13 @@ export default function ChatClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const voiceInput = searchParams.get('voiceInput');
-  let jwt = searchParams.get('token') ? searchParams.get('token') : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMzExMSIsImRldmljZUlkIjoiMTIiLCJpYXQiOjE1MTYyMzkwMjJ9.zFbkBP1F-KxDzyMs14tpvEEkQH4qYgOJurDp9i_zOH8' ;
+  let jwt = searchParams.get('jwt') ? searchParams.get('jwt') : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMSIsImRldmljZUlkIjoiMTIiLCJwcm9qZWN0SWQiOiI4R1QtMVdjLXZEbi1TdlkiLCJhcGlLZXkiOiJleUpoYkdjaU9pSklVekkxTmlKOS5leUp3Y205cVpXTjBTV1FpT2lJNFIxUXRNVmRqTFhaRWJpMVRkbGtpZlEueUswY1hLa3p0bDJUVWc3X3I2Y3dZLU5XYklkVFFjZkpUVXFCNmhES0NqOCIsImlhdCI6MTUxNjIzOTAyMn0.GsyZwMWrhbqPO0n8Ky3J9MKhx6xWSwgNZyw3ZemFZqE' ;
 
   const projectId = searchParams.get('projectId');
+  const test = searchParams.get('test');
+  const isTest = test === 'true'
   console.log('project id in params',projectId);
+  const [istesting,setIsTesting] = useState(isTest)
   
 
 
@@ -36,13 +39,16 @@ export default function ChatClient() {
         }
   const userIdFromToken = decodedToken.userId ; 
   const deviceIdFromToken = decodedToken.deviceId ; 
+  const apiKeyFromToken = decodedToken.apiKey ; 
+  const projectIdToken = decodedToken.projectId ; 
   
   if( userIdFromToken && userIdFromToken !== userId){
     
     setUserId(userIdFromToken)
     localStorage.setItem('userId', userIdFromToken )
     localStorage.setItem('deviceId', deviceIdFromToken )
-    localStorage.setItem('projectId', projectId )
+    localStorage.setItem('projectId', projectIdToken )
+    localStorage.setItem('apiKey', apiKeyFromToken )
     
   }
 
@@ -54,7 +60,7 @@ export default function ChatClient() {
   return (
     <div className="w-screen h-screen md:w-1/2 flex items-center justify-center bg-white">
         
-      <ChatbotUI voiceInput={voiceInput}  jwt={jwt}/>
+      <ChatbotUI voiceInput={voiceInput}  isTest={isTest} jwt={jwt}/>
       
     </div>
   );

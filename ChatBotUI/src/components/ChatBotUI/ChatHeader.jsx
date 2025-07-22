@@ -6,9 +6,9 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useState } from 'react';
 import ChatBotHelp from './ChatBotHelp';
 
-const ChatHeader = ({setIsOpen , setClearChat})=>{
+const ChatHeader = ({setIsOpen , setClearChat ,isTest , userId , handleUserIdChange})=>{
     const [showModal, setShowModal] = useState(false);
-
+    const [input,setInput] = useState('')
     return (
         <div className="bg-linear-to-bl from-violet-500 to-fuchsia-500 text-black p-4 flex justify-between items-center">
 
@@ -29,6 +29,31 @@ const ChatHeader = ({setIsOpen , setClearChat})=>{
                     </span>
 
                 </div>
+                { 
+                isTest 
+                    
+                &&
+
+                    <div>   
+                        <p>useriD is {userId}</p>
+                            <form onSubmit={(e)=>{
+                                e.preventDefault();
+                                setInput('')
+                                handleUserIdChange(input)
+                            }}>
+                                <textarea value={input} onChange={(e)=>setInput(e.target.value)} >
+                                    
+                                </textarea>
+                                <button type='submit'>
+                                    Submit
+                                </button>
+
+                            </form>
+
+                    </div>
+
+                }
+
 
             </div>
 
