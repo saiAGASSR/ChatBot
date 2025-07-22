@@ -40,7 +40,7 @@ export default function SelectLabels({setSelectedLanguageCode,selectedLanguageCo
   };
 
   return (
-            <FormControl
+          <FormControl
             size="small"
             sx={{
                 minWidth: 50,
@@ -53,11 +53,12 @@ export default function SelectLabels({setSelectedLanguageCode,selectedLanguageCo
                 fontSize: '0.75rem', // text-xs
                 top: '5px',
                 },
-                 mt: 1,
+                 mt: 1
             }}
             >
-            <InputLabel id="language-select-label">Language</InputLabel>
+            <InputLabel id="language-select-label " className='text-white'>Language</InputLabel>
             <Select
+                className='text-white'
                 labelId="language-select-label"
                 id="language-select"
                 value={selectedLanguageCode}
